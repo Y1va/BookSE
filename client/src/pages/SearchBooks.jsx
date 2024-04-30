@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react';
 import { Container, Col, Form, Button, Card, Row } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-import { saveBook, searchGoogleBooks } from '../utils/API';
+import { searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 import { useMutation } from '@apollo/client';
 import { SAVE_BOOK } from '../utils/mutations';
 
 const SearchBooks = () => {
+  // Use the useMutation hook to handle saveBook
   const [saveBook, { error }] = useMutation(SAVE_BOOK);
   // create state for holding returned google api data
   const [searchedBooks, setSearchedBooks] = useState([]);
@@ -17,8 +18,7 @@ const SearchBooks = () => {
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
-  // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
-  // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
+  // set up useEffect hook to save `savedBookIds` list to localStorage
   useEffect(() => {
     return () => saveBookIds(savedBookIds);
   });
@@ -68,6 +68,8 @@ const SearchBooks = () => {
     }
 
     try {
+      // Use the saveBook mutation to handle saveBook using bookToSave as a variable
+      // eslint-disable-next-line no-unused-vars
       const { data } = await saveBook({
         variables: {
           bookInput: { ...bookToSave }
@@ -87,7 +89,7 @@ const SearchBooks = () => {
 
   return (
     <>
-      <div className="text-light bg-dark p-5">
+      <div className="text-light bg-dark pt-5">
         <Container>
           <h1>Search for Books!</h1>
           <Form onSubmit={handleFormSubmit}>
