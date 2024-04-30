@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unknown-property */
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
 import Auth from "../utils/auth";
@@ -20,7 +19,6 @@ const SavedBooks = () => {
     }
 
     try {
-      // const response = await deleteBook(bookId, token);
       const { data } = await removeBook({
           variables: { bookId }
       });
